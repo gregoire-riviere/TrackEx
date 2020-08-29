@@ -1,18 +1,15 @@
 defmodule Trackex do
-  @moduledoc """
-  Documentation for Trackex.
-  """
+  require Logger
+  use Application
 
-  @doc """
-  Hello world.
+  def start(_type, _args) do
+    children = [
+      {Plug.Cowboy, scheme: :http, plug: AppRouter, options: [port: 4001]},
+      {IP.Filter, []}
+    ]
+    Logger.info("Starting the app")
 
-  ## Examples
-
-      iex> Trackex.hello()
-      :world
-
-  """
-  def hello do
-    :world
+    opts = [strategy: :one_for_one, name: MyApp.Supervisor]
+    Supervisor.start_link(children, opts)
   end
 end
