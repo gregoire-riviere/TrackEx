@@ -30,6 +30,7 @@ defmodule Heart.Beat do
     deads = state |> Enum.into([]) |> Enum.filter(& elem(&1, 1) == false) |> Enum.map(fn {u, _} -> u end)
     if length(deads) > 0, do: Logger.warn("Users #{inspect deads} are inactive")
     deads |> Enum.each(& Users.dead_user(&1))
+    deads |> Enum.each(& Files.Tracking.remove_seeder(&1))
     Process.send_after(self(), :check_dead_users, 1000*@refresh_time)
     {:noreply, state |> Enum.into([]) |> Enum.reject(& elem(&1, 0) in deads) |> Enum.map(fn {u, _} -> {u, false} end) |> Enum.into(%{})}
   end
