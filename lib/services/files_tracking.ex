@@ -11,7 +11,7 @@ defmodule Files.Tracking do
   def init(_) do
     if File.exists?(@file_path) do
       :ets.file2tab('#{@file_path}')
-    else {:ok, :ets.new(:files, [:bag])} end
+    else {:ok, :ets.new(:files, [])} end
   end
 
   def add_files_seed(user, file_list) do
