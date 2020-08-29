@@ -7,7 +7,8 @@ defmodule Trackex do
       {Plug.Cowboy, scheme: :http, plug: AppRouter, options: [port: 4001]},
       {IP.Filter, []},
       {Users, []},
-      {Heart.Beat, []}
+      {Heart.Beat, []},
+      {Files.Tracking, []}
     ]
     Logger.info("Starting the app")
 

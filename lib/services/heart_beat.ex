@@ -26,7 +26,7 @@ defmodule Heart.Beat do
   end
 
   def handle_info(:check_dead_users, state) do
-    Logger.info("Checking dead users...")
+    # Logger.info("Checking dead users...")
     deads = state |> Enum.into([]) |> Enum.filter(& elem(&1, 1) == false) |> Enum.map(fn {u, _} -> u end)
     if length(deads) > 0, do: Logger.warn("Users #{inspect deads} are inactive")
     deads |> Enum.each(& Users.dead_user(&1))
