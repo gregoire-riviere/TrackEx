@@ -5,7 +5,9 @@ defmodule Trackex do
   def start(_type, _args) do
     children = [
       {Plug.Cowboy, scheme: :http, plug: AppRouter, options: [port: 4001]},
-      {IP.Filter, []}
+      {IP.Filter, []},
+      {Users, []},
+      {Heart.Beat, []}
     ]
     Logger.info("Starting the app")
 
